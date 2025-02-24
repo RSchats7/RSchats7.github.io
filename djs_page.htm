@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>GL45RW Game Engine (DJ's article)</title>
+        <link rel="stylesheet" href="djs_page.css" />
+    </head>
+    <body>
+		<h1 id="header">GL45RW Game Engine (DJ's article)</h1>
+		<hr>
+		<div class="content">
+			<p>
+				This is a game engine that I have been working on since September 2022.<br>
+				It is primarily written in C/C++ with optional support for scripting with LuaJIT.<br>
+				It makes use of SDL2 for windowing and input (or GLFW 3 if specified during build time.)<br>
+				It uses OpenAL Soft for audio output.<br>
+				It has support for OpenGL ES 3.1 and software rendering.<br>
+			</p>
+			<figure>
+				<img class="scaled" src="resources/screencap_top.png" alt="Screenshot of the game" width=640px height=480px></img>
+				<figcaption>Screencap of the game running</figcaption>
+			</figure>
+			
+		</div>
+		
+		<table>
+			<thead>
+				<th>Table of contents</th>
+			</thead>
+			<tbody>
+				<tr><td><a href="#renderers">What does it have for rendering backends?</a></td></tr>
+				<tr><td><a href="#why_glfw3">Why does it also support GLFW 3?</a></td></tr>
+				<tr><td><a href="#supported_oses">Supported Operating Systems (and CPU architectures)</a></td></tr>
+				<tr><td><a href="#gallery">Gallery</a></td></tr>
+				<tr><td><a href="#videos">Gameplay Footage</a></td></tr>
+			</tbody>
+		</table>
+		
+		<h2 id="renderers">What does it have for rendering backends?</h1>
+		<hr>
+		<div class="content">
+			<ul>
+				<li>
+					<b>opengl</b>:<br>
+					<tab>
+					    Hardware-accelerated OpenGL ES 3.1 rendering backend.<br>
+					    Performs the best and supports all graphical rendering features.
+					</tab>
+				</li>
+				<li>
+					<b>sw3d3</b>:<br>
+				    <tab>
+						Software rasterizer.<br>
+				        May perform good at 640x480 with 50% rendering scale or not.<br>
+				        Supports some graphical rendering features (dynamic lights are the notable exclusion atm.)<br>
+				        Disabled if building the engine with GLFW 3 instead of SDL2.<br>
+				        YMMV.
+				    </tab>
+				</li>
+				<li>
+					<b>headless</b>:<br>
+					<tab>
+					    Headless mode.<br>
+					    Mainly reserved for dedicated game servers.
+					</tab>
+				</li>
+			</ul>
+		</div>
+		
+		<h2 id="why_glfw3">Why does it also support GLFW 3?</h1>
+		<hr>
+		<div class="content">
+			<p>
+				Short answer: Because of a longstanding bug in the Raspberry Pi V3D driver prevents SDL2 from creating a GLES 3.1 context (it yields GLXBadFBConfig)<br>
+				GLFW 3 doesn't have this issue.<br>
+			</p>
+		</div>
+		
+		<h2 id="supported_oses">Supported Operating Systems (and CPU architectures)</h2>
+		<hr>
+		<div class="content">
+			<table>
+				<thead>
+					<th>OS</th>
+					<th>amd64?</th>
+					<th>aarch64?</th>
+					<th>Notes</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Microsoft Windows</td>
+						<td class="td_y">Y</td>
+						<td class="td_n">N*</td>
+						<td>
+							SDL2 builds should theoretically work on Windows XP 64-bit but I haven't tried on anything older than Windows 10.<br>
+							Windows amd64 builds also work on the recent Wine versions too!<br>
+							* I haven't tried on WoA, amd64 builds might work on ARM64EC.
+						</td>
+					</tr>
+					<tr>
+						<td>GNU/Linux</td>
+						<td class="td_y">Y</td>
+						<td class="td_y">Y</td>
+						<td>You will need to build with GLFW3 if you want OpenGL to work on the Raspberry Pi 4 and 5.</td>
+					</tr>
+					<tr>
+						<td>Haiku</td>
+						<td class="td_y">Y</td>
+						<td class="td_n">N*</td>
+						<td>
+							While the OpenGL renderer does work with Mesa's LLVMPipe, it will stutter a lot initially, so if you don't have hardware acceleration available, use the dedicated software rasterizer instead for smoother performance on Haiku.<br>
+							* As with Windows on ARM, I haven't tried to run it on Haiku aarch64.
+						</td>
+					</tr>
+					<tr>
+						<td>Android (Termux, non-proot)</td>
+						<td class="td_n">N*</td>
+						<td class="td_y">Y</td>
+						<td>
+							Use Termux:X11 for the best performance.<br>
+							OpenGL rendering works decently well on Turnip + Zink on my nearly 4 year old Galaxy S21+ (The Snapdragon 888+ model, NOT the Exynos version)<br>
+							* It probably would work, but who uses Android on x86-64 anyway?
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<h2 id="gallery">Gallery</h2>
+		<hr>
+		<div>
+			<figure>
+				<img width=800 height=600 src="resources/screencap.png" alt="Screenshot of the game"></img>
+				<figcaption>The game running on Ubuntu MATE 24.04 (amd64)</figcaption>
+			</figure>
+			<p><br></p>
+			<figure>
+				<img src="resources/haiku_screenshot.png" alt="Screenshot of the game running on Haiku"></img>
+				<figcaption>The game running on Hauku (amd64)</figcaption>
+			</figure>
+			<p><br></p>
+			<figure>
+				<img src="resources/win11.webp" alt="Screenshot of the game running on Windows 11"></img>
+				<figcaption>The game running on Windows 11 (amd64)</figcaption>
+			</figure>
+		</div>
+		
+		<h2 id="videos">Gameplay Footage</h2>
+		<hr>
+		<figure>
+			<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/aiwr4sFDzgk?si=Xh0vBZBfOiCFNZDS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			<figcaption>Running on Haiku in software mode.</figcaption>
+		</figure>
+		
+		<p><br></p>
+		
+		<figure>
+			<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/FlRGRzTnGx8?si=InJ8Sq2VyyMRO3Iz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			<figcaption>Running on Windows 11 amd64.</figcaption>
+		</figure>
+		
+		<hr>
+		
+		<a href="#header">Go back to the top.</a>
+		<hr>
+		<a href="index.html">Go back to the landing page.</a>
+    </body>
+</html>
