@@ -4,6 +4,18 @@
 	gap: 15px;
 }
 
+.image_gallery {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.video_gallery {
+    column-count: 2;
+    column-gap: 40px;
+    column-width: 40rem;
+    column-fill: balanced;
+}
+
 tab {
     /* Discovered this trick a bit down this page: https://stackoverflow.com/questions/9792849/how-to-insert-spaces-tabs-in-text-using-html-css */
     display: inline-block;

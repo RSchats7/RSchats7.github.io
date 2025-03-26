@@ -1,0 +1,49 @@
+
+
+
+html { 
+    background-color: rgb(255, 255, 255);
+    
+    
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border: 8px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1400px;
+    text-align: center;
+
+}
+
+article{
+    column-count: 3;
+    column-rule: 1px solid black;
+    
+}
+article:hover{
+    color: red;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    border: 8px solid rgb(255, 255, 255);
+}
+
+
+.float-image {
+    width: 550px; /* Adjust size as needed */
+    height: auto;
+    float: center; /* Float image to the left */
+    margin: 10px; /* Adds spacing around the image */
+    border-radius: 5px;
+    
+}
